@@ -13,9 +13,11 @@ import { faker } from '@faker-js/faker';
 })
 export class AddComponent {
   protected addTaskForm: FormGroup = new FormGroup({
-    title: new FormControl(null, {
-      // TODO: add validators for required and min length 10
-    }),
+    title: new FormControl(null, [
+      // Validate that the title field has at least 10 characters
+      Validators.required,
+      Validators.minLength(10)
+    ]),
     description: new FormControl(null),
     priority: new FormControl(
       { value: TaskPriority.MEDIUM, disabled: false },
@@ -37,13 +39,15 @@ export class AddComponent {
       scheduledDate: new Date(),
     };
 
-    // TODO: save updated task to storage
-    // TODO: navigate to home page
+    // Save updated task to storage
+    this.storageService.addTaskItem(newTask);
+    // Navigate to home page
+    this.router.navigate(['/']);
     throw new Error('Not implemented');
   }
 
   onCancel(): void {
-    // TODO: navigate to home page
-    throw new Error('Not implemented');
+    // Navigate to home page
+    this.router.navigate(['/']);
   }
 }

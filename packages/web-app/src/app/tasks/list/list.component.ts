@@ -22,21 +22,25 @@ export class ListComponent {
   }
 
   onDoneTask(item: Task): void {
-    // TODO: mark as completed
-    // TODO: save updated task to storage
+    // Mark task as completed
+    item.completed = true;
+    // Save updated task to storage
+    this.storageService.updateTaskItem(item);
     throw new Error('Not implemented');
   }
 
   onDeleteTask(item: Task): void {
-    // TODO: mark as archived
-    // TODO: save updated task to storage
-    // TODO: refresh list without archived items
-    throw new Error('Not implemented');
+    // Mark task as archived
+    item.isArchived = true;
+    // Save updated task to storage
+    this.storageService.updateTaskItem(item);
+    // Refresh the task list without including archived items
+    this.getTaskList();
   }
 
   onAddTask(): void {
-    // TODO: navigate to add task
-    throw new Error('Not implemented');
+    // Navigate to the add task form
+    this.router.navigate(['add']);
   }
 
   private getTaskList(): void {
