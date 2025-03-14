@@ -1,27 +1,98 @@
 .container {
   justify-content: space-around;
+  width: 100vw;
 
-  .action-button-row {
-    display: flex;
-    justify-content: flex-start;
-    gap: var(--layout-gap-size);
+  .content {
+    padding: 25px;
   }
 
-  .tasks {
-    display: inline-flex;
-    flex-direction: column;
-    margin: 5px;
-    width: min(calc(100vw - var(--layout-padding)), var(--layout-width-max));
-    gap: var(--layout-gap-size);
+  .add-button {
+    background-color: var(--button-main-color);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+  }
 
-    mat-card {
-      padding: var(--layout-padding);
-      &.complete {
-        background-color: var(--success-color);
-      }
-      .high-priority {
-        color: var(--error-color);
-      }
+  .search-add-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+  }
+
+  .search-filters-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 25px;
+  }
+  
+  .search {
+    z-index: 98;
+  }
+  
+  .tasks {
+    width: 100%;
+  }
+
+  mat-card {
+    padding: 20px;
+    border-radius: 15px;
+    border: none;
+    box-shadow: none;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  mat-card-content {
+    padding: 0;
+    display: flex;
+  }
+
+  .description-container {
+    color: var(--secondary-font-color);
+  }
+
+  .due-date-container {
+    padding-top: 20px;
+    font-size: small;
+    color: var(--secondary-font-color);
+  }
+
+  .task-actions {
+    justify-content: flex-end;
+    gap: 10px;
+
+    button {
+      border-radius: 10px;
+    }
+  }
+
+  .high-priority {
+    background-color: var(--high-priority-secondary-color);
+  }
+
+  .medium-priority {
+    background-color: var(--medium-priority-secondary-color);
+  }
+
+  .low-priority {
+    background-color: var(--low-priority-secondary-color);
+  }
+  
+  .complete {
+    background-color: var(--done-secondary-color);
+  }
+  
+  .incomplete {
+    background-color: var(--to-do-secondary-color);
+  }
+
+  @media only screen and (max-width: 800px) {
+    .search-add-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      margin-bottom: 20px;
     }
   }
 }

@@ -19,6 +19,9 @@ export class AddComponent {
       Validators.minLength(10)
     ]),
     description: new FormControl(null),
+    date: new FormControl(null, [
+      Validators.required
+    ]),
     priority: new FormControl(
       { value: TaskPriority.MEDIUM, disabled: false },
       {
@@ -35,19 +38,17 @@ export class AddComponent {
       ...this.addTaskForm.getRawValue(),
       uuid: faker.string.uuid(),
       isArchived: false,
-      // TODO: allow user to set scheduled date using MatDatePicker
-      scheduledDate: new Date(),
+      scheduledDate: this.addTaskForm.getRawValue().date,
     };
 
     // Save updated task to storage
     this.storageService.addTaskItem(newTask);
     // Navigate to home page
-    this.router.navigate(['/']);
-    throw new Error('Not implemented');
+    this.router.navigateByUrl('/');
   }
 
   onCancel(): void {
     // Navigate to home page
-    this.router.navigate(['/']);
+    this.router.navigateByUrl('/');
   }
 }

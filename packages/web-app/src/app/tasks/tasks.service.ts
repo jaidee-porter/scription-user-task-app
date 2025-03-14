@@ -29,20 +29,20 @@ export class TasksService {
       case 'isArchived':
         this.tasks = this.tasks.filter((task) => !task.isArchived);
         break;
-        case 'priority':
-          // Filter for tasks with High Priority
-          this.tasks = this.tasks.filter((task) => task.priority === 'HIGH');
-          break;
-        case 'scheduledDate':
-          // Filter for tasks Due Today
-          let currentDate = new Date();
-          this.tasks = this.tasks.filter((task) => {
-            let taskDate = new Date(task.scheduledDate);
-            return taskDate.getDate() === currentDate.getDate() &&
-              taskDate.getMonth() === currentDate.getMonth() &&
-              taskDate.getFullYear() === currentDate.getFullYear();
-          });
-          break;
+      case 'priority':
+        // Filter for tasks with High Priority
+        this.tasks = this.tasks.filter((task) => task.priority === 'HIGH');
+        break;
+      case 'scheduledDate':
+        // Filter for tasks Due Today
+        let currentDate = new Date();
+        this.tasks = this.tasks.filter((task) => {
+          let taskDate = new Date(task.scheduledDate);
+          return taskDate.getDate() === currentDate.getDate() &&
+            taskDate.getMonth() === currentDate.getMonth() &&
+            taskDate.getFullYear() === currentDate.getFullYear();
+        });
+        break;
       case 'completed':
         this.tasks = this.tasks.filter((task) => !task.completed);
     }
@@ -50,7 +50,6 @@ export class TasksService {
 
   searchTask(search: string): void {
     if (search) {
-      // TODO: filter tasks which title include search value
       const options = {
         keys: Object.keys(this.tasks[0]),  
         threshold: 0.5,

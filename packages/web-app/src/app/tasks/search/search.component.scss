@@ -1,0 +1,19 @@
+::ng-deep .mdc-notched-outline__leading, ::ng-deep .mdc-notched-outline__notch, ::ng-deep .mdc-notched-outline__trailing {
+  border: none !important;
+}
+  
+::ng-deep .mat-mdc-text-field-wrapper {
+  background: white;
+  border-radius: 30px !important;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-bar mat-icon {
+  font-size: 20px;
+  color: gray;
+}

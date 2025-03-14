@@ -6,7 +6,9 @@ import { FiltersComponent } from './filters.component';
 import { TasksService } from '../tasks.service';
 import { MatChipsModule } from '@angular/material/chips';
 import { HarnessLoader } from '@angular/cdk/testing';
+import { MatIconModule } from '@angular/material/icon';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 class MockTasksService {
   filterTask(): void {
@@ -24,7 +26,7 @@ describe('FiltersComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [BrowserModule, MatChipsModule],
+      imports: [BrowserModule, MatChipsModule, MatIconModule, NoopAnimationsModule],
       declarations: [FiltersComponent],
       providers: [{ provide: TasksService, useClass: MockTasksService }],
     }).compileComponents();
@@ -42,6 +44,7 @@ describe('FiltersComponent', () => {
   });
 
   it('should contain 3 mat chips for filtering', async () => {
+    fixture.componentInstance.showFilters = true;
     jest.spyOn(tasksService, 'filterTask');
     const matChips = await loader.getAllHarnesses(MatChipOptionHarness);
     expect(matChips.length).toEqual(3);
@@ -51,6 +54,7 @@ describe('FiltersComponent', () => {
   });
 
   it('should filter tasks by priority', async () => {
+    fixture.componentInstance.showFilters = true;
     jest.spyOn(tasksService, 'filterTask');
     const matChips = await loader.getAllHarnesses(MatChipOptionHarness);
     await matChips[0].select();
@@ -59,6 +63,7 @@ describe('FiltersComponent', () => {
   });
 
   it('should filter tasks by completed', async () => {
+    fixture.componentInstance.showFilters = true;
     jest.spyOn(tasksService, 'filterTask');
     const matChips = await loader.getAllHarnesses(MatChipOptionHarness);
     await matChips[1].select();
@@ -67,6 +72,7 @@ describe('FiltersComponent', () => {
   });
 
   it('should filter tasks by scheduledDate', async () => {
+    fixture.componentInstance.showFilters = true;
     jest.spyOn(tasksService, 'filterTask');
     const matChips = await loader.getAllHarnesses(MatChipOptionHarness);
     await matChips[2].select();

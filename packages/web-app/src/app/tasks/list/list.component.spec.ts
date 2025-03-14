@@ -12,6 +12,7 @@ import { SearchComponent } from '../search/search.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatCardHarness } from '@angular/material/card/testing';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -91,13 +92,13 @@ describe('ListComponent', () => {
 
   it('should display the title', () => {
     const title = fixture.debugElement.query(By.css('h1'));
-    expect(title.nativeElement.textContent).toEqual('My Daily Tasks');
+    expect(title.nativeElement.textContent).toEqual('Welcome to your Task List');
   });
 
   it(`should display total number of tasks`, () => {
     const total = fixture.debugElement.query(By.css('h3'));
     expect(total.nativeElement.textContent).toEqual(
-      `Total Tasks: ${fakeTasks.length}`,
+      `You have ${fakeTasks.length} tasks`,
     );
   });
 
@@ -141,6 +142,4 @@ describe('ListComponent', () => {
     expect(component.onDeleteTask).toHaveBeenCalledTimes(1);
     expect(tasksService.tasks[0].isArchived).toBe(true);
   });
-
-  it.todo(`should not display archived tasks after deleting them`);
 });

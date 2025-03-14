@@ -1,46 +1,58 @@
 <div class="container">
-  <h1>Tasks</h1>
-  <h3>Total Tasks: {{ tasksService.tasks.length }}</h3>
-  <take-home-filters-component></take-home-filters-component>
-  <take-home-search-component></take-home-search-component>
-  <div class="action-button-row">
-    <button data-testid="add-task" mat-button (click)="onAddTask()">
-      Add Task
-    </button>
-  </div>
-  <div class="tasks">
-    <ng-container *ngFor="let item of tasksService.tasks">
-      <mat-card [class.complete]="item.completed">
-        <mat-card-title>{{ item.title }}</mat-card-title>
-        <mat-card-header>{{
-          item.scheduledDate | date : 'short'
-        }}</mat-card-header>
-        <mat-card-content>
-          {{ item.description }}
-        </mat-card-content>
-        <mat-card-footer *ngIf="item.priority === 'HIGH'">
-          <span class="high-priority">{{ item.priority }}</span>
-        </mat-card-footer>
-        <mat-card-actions *ngIf="item.uuid !== '1' && item.uuid !== '2'">
-          <button
-            *ngIf="!item.completed"
-            data-testid="complete-task"
-            color="primary"
-            mat-flat-button
-            (click)="onDoneTask(item)"
-          >
-            <mat-icon>done</mat-icon>Done
-          </button>
-          <button
-            data-testid="delete-task"
-            color="warn"
-            mat-flat-button
-            (click)="onDeleteTask(item)"
-          >
-            <mat-icon>delete</mat-icon>Delete
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </ng-container>
+  <div class="content">
+    <h1>Welcome to your Task List</h1>
+    <h3>You have {{ tasksService.tasks.length }} tasks</h3>
+    <div class="search-add-grid">
+      <div class="search-filters-grid">
+        <take-home-search-component class="search"></take-home-search-component>
+        <take-home-filters-component></take-home-filters-component>
+      </div>
+      <button class="add-button" data-testid="add-task" mat-button (click)="onAddTask()">
+        Add Task
+      </button>
+    </div>
+    <div class="tasks">
+      <ng-container *ngFor="let item of tasksService.tasks">
+        <mat-card>
+          <mat-card-title>{{ item.title }}</mat-card-title>
+          <mat-chip-set>
+            <mat-chip [ngClass]="{'high-priority' : item.priority === 'HIGH', 'medium-priority' : item.priority === 'MEDIUM', 'low-priority' : item.priority === 'LOW'}">
+              {{ item.priority.charAt(0) + item.priority.slice(1).toLowerCase() + " priority" }}
+            </mat-chip>
+            <mat-chip [ngClass]="{'complete' : item.completed, 'incomplete' : !item.completed}">
+              {{ item.completed == true ? "Done" : "To-do" }}
+            </mat-chip>
+          </mat-chip-set>
+          <mat-card-header></mat-card-header>
+          <mat-card-content class="description-container">
+            {{ item.description }}
+          </mat-card-content>
+          <mat-card-content class="due-date-container">
+            <mat-icon>calendar_month</mat-icon>
+            <span>{{ item.scheduledDate | date : 'short' }}</span>
+          </mat-card-content>
+          <mat-card-footer></mat-card-footer>
+          <mat-card-actions class="task-actions" *ngIf="item.uuid !== '1' && item.uuid !== '2'">
+            <button
+              *ngIf="!item.completed"
+              data-testid="complete-task"
+              color="primary"
+              mat-flat-button
+              (click)="onDoneTask(item)"
+            >
+              <mat-icon>done</mat-icon>Done
+            </button>
+            <button
+              data-testid="delete-task"
+              color="warn"
+              mat-flat-button
+              (click)="onDeleteTask(item)"
+            >
+              <mat-icon>delete</mat-icon>Delete
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </ng-container>
+    </div>
   </div>
 </div>

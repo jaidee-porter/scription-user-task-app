@@ -26,7 +26,6 @@ export class ListComponent {
     item.completed = true;
     // Save updated task to storage
     this.storageService.updateTaskItem(item);
-    throw new Error('Not implemented');
   }
 
   onDeleteTask(item: Task): void {
