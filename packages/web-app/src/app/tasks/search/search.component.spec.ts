@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { TasksService } from '../tasks.service';
 
 class MockTasksService {
@@ -25,6 +26,7 @@ describe('SearchComponent', () => {
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
+        MatIconModule
       ],
       declarations: [SearchComponent],
       providers: [{ provide: TasksService, useClass: MockTasksService }],

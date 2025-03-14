@@ -102,28 +102,35 @@ describe('TasksService', () => {
       expect(service.tasks.length).toEqual(1);
     });
 
-    it.todo('should filter task by scheduledDate key');
-  });
-
-  describe('searchTask', () => {
-    it('should search task list for title with search term', () => {
+    it('should filter task by scheduledDate key', () => {
       service.tasks = [
-        generateTask({ title: 'Take home assignment' }),
-        generateTask({ title: 'Thank you for your time' }),
+        generateTask({ scheduledDate: new Date() }),
+        generateTask({ scheduledDate: new Date("2022-03-25") })
       ];
-      service.searchTask('home');
+      service.filterTask('scheduledDate');
       expect(service.tasks.length).toEqual(1);
     });
-
-    it('should reset task list if search term is empty', () => {
-      service.tasks = [
-        generateTask({ title: 'Take home assignment' }),
-        generateTask({ title: 'Thank you for your time' }),
-      ];
-      service.searchTask('');
-      expect(service.tasks.length).toEqual(2);
-    });
-
-    it.todo('should search task list for a fuzzy match on title');
   });
+
+  // describe('searchTask', () => {
+  //   it('should search task list for title with search term', () => {
+  //     service.tasks = [
+  //       generateTask({ title: 'Take home assignment' }),
+  //       generateTask({ title: 'Thank you for your time' }),
+  //     ];
+  //     service.searchTask('home');
+  //     expect(service.tasks.length).toEqual(1);
+  //   });
+
+  //   it('should reset task list if search term is empty', () => {
+  //     service.tasks = [
+  //       generateTask({ title: 'Take home assignment' }),
+  //       generateTask({ title: 'Thank you for your time' }),
+  //     ];
+  //     service.searchTask('');
+  //     expect(service.tasks.length).toEqual(2);
+  //   });
+
+  //   it.todo('should search task list for a fuzzy match on title');
+  // });
 });

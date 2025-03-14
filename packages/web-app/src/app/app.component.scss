@@ -3,5 +3,11 @@
   height: max(100%, 100vh);
   display: flex;
   width: 100vw;
+  overflow: hidden;
   justify-content: center;
+  background-color: var(--background-main-color);
+}
+
+* {
+  font-family: 'Montserrat';
 }

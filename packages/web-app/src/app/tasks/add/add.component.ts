@@ -13,10 +13,15 @@ import { faker } from '@faker-js/faker';
 })
 export class AddComponent {
   protected addTaskForm: FormGroup = new FormGroup({
-    title: new FormControl(null, {
-      // TODO: add validators for required and min length 10
-    }),
+    title: new FormControl(null, [
+      // Validate that the title field has at least 10 characters
+      Validators.required,
+      Validators.minLength(10)
+    ]),
     description: new FormControl(null),
+    date: new FormControl(null, [
+      Validators.required
+    ]),
     priority: new FormControl(
       { value: TaskPriority.MEDIUM, disabled: false },
       {
@@ -33,17 +38,17 @@ export class AddComponent {
       ...this.addTaskForm.getRawValue(),
       uuid: faker.string.uuid(),
       isArchived: false,
-      // TODO: allow user to set scheduled date using MatDatePicker
-      scheduledDate: new Date(),
+      scheduledDate: this.addTaskForm.getRawValue().date,
     };
 
-    // TODO: save updated task to storage
-    // TODO: navigate to home page
-    throw new Error('Not implemented');
+    // Save updated task to storage
+    this.storageService.addTaskItem(newTask);
+    // Navigate to home page
+    this.router.navigateByUrl('/');
   }
 
   onCancel(): void {
-    // TODO: navigate to home page
-    throw new Error('Not implemented');
+    // Navigate to home page
+    this.router.navigateByUrl('/');
   }
 }

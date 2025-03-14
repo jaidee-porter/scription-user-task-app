@@ -1,9 +1,19 @@
 <div class="container">
-  <mat-chip-listbox aria-label="Filter selection">
-    <mat-chip-option>High Priority</mat-chip-option>
-    <mat-chip-option (selectionChange)="filterTask('completed', $event)"
-      >Not Complete</mat-chip-option
-    >
-    <mat-chip-option>Due Today</mat-chip-option>
+  <div class="side-container"></div>
+  <div class="title-container" (click)="updateFilterVisibility()">
+    <p>Filters</p>
+    <mat-icon *ngIf="!showFilters">chevron_right</mat-icon>
+    <mat-icon *ngIf="showFilters">chevron_left</mat-icon>
+  </div>
+  <mat-chip-listbox [@slideInOut] *ngIf="showFilters" aria-label="Filter selection">
+    <mat-chip-option (selectionChange)="filterTask('priority', $event)">
+      High Priority
+    </mat-chip-option>
+    <mat-chip-option (selectionChange)="filterTask('completed', $event)">
+      Not Complete
+    </mat-chip-option>
+    <mat-chip-option (selectionChange)="filterTask('scheduledDate', $event)">
+      Due Today
+    </mat-chip-option>
   </mat-chip-listbox>
 </div>

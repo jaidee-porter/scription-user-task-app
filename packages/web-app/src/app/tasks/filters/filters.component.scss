@@ -1,20 +1,32 @@
 .container {
-  justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 
-  .tasks {
-    display: inline-flex;
-    flex-direction: column;
-    margin: 5px;
-    width: min(calc(100vw - var(--layout-padding)), var(--layout-width-max));
-    gap: var(--layout-gap-size);
+  mat-icon {
+    padding-left: 5px;
+    margin-top: 8px;
+  }
 
-    mat-card {
-      &:nth-child(odd) {
-        background-color: var(--background-light-color);
-      }
-      &:nth-child(even) {
-        background-color: var(--background-dark-color);
-      }
-    }
+  .side-container {
+    position: absolute;
+    left: 0;
+    background-color: var(--background-main-color);
+    width: 300px;
+    height: 40px;
+    z-index: 97;
+  }
+
+  .title-container {
+    cursor: pointer;
+    display: flex;
+    background-color: var(--background-main-color);
+    align-items: center;
+    z-index: 99;
+  }
+  
+  @media only screen and (max-width: 800px) {
+    align-items: flex-start;
   }
 }

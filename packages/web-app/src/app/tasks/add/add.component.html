@@ -1,32 +1,52 @@
 <div class="container">
+  <div class="content">
   <h1>Add Task</h1>
   <form [formGroup]="addTaskForm" (ngSubmit)="onSubmit()">
-    <mat-form-field>
-      <mat-label>Title</mat-label>
-      <input matInput type="text" formControlName="title" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Description</mat-label>
-      <textarea rows="4" matInput formControlName="description"> </textarea>
-    </mat-form-field>
-    <mat-form-field data-testid="priority-form-field" floatLabel="always">
-      <mat-label>Priority</mat-label>
-      <mat-select
-        formControlName="priority"
-        data-testid="priority-select"
-        class="priority-select"
-      >
-        <mat-option *ngFor="let option of priorities" [value]="option">
-          {{ option }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="input-container hint-container">
+      <div class="input-title">Title<span class="required-input">*</span></div>
+      <mat-form-field appearance="outline">
+        <input matInput type="text" formControlName="title" />
+        <mat-hint class="input-requirements">Enter a title with at least 10 characters</mat-hint>
+        <mat-error class="input-error">The task title must be at least 10 characters</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-container">
+      <div class="input-title">Description</div>
+      <mat-form-field appearance="outline">
+        <textarea rows="4" matInput formControlName="description"> </textarea>
+      </mat-form-field>
+    </div>
+    <div class="input-container hint-container">
+      <div class="input-title">Due Date<span class="required-input">*</span></div>
+      <mat-form-field appearance="outline" placeholder="Choose a date">
+        <input matInput formControlName="date" [matDatepicker]="picker">
+        <mat-hint class="input-requirements">MM/DD/YYYY</mat-hint>
+        <mat-error class="input-error">The task due date is required and should be in the format MM/DD/YYYY</mat-error>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="input-container">
+      <div class="input-title">Priority<span class="required-input">*</span></div>
+      <mat-form-field data-testid="priority-form-field" appearance="outline" floatLabel="always">
+        <mat-select
+          formControlName="priority"
+          data-testid="priority-select"
+          class="priority-select"
+        >
+          <mat-option *ngFor="let option of priorities" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     <div class="action-button-row">
       <button
         data-testid="add-task"
         mat-flat-button
         color="primary"
         [disabled]="addTaskForm.invalid"
+        type="submit"
       >
         Add
       </button>
@@ -34,11 +54,12 @@
         type="button"
         data-testid="cancel"
         mat-flat-button
-        color="accent"
+        class="cancel-button"
         (click)="onCancel()"
       >
         Cancel
       </button>
     </div>
   </form>
+</div>
 </div>

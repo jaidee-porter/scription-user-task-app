@@ -7,14 +7,21 @@ import { StorageService } from '../../storage/storage.service';
 import { AddComponent } from './add.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Router } from '@angular/router';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
+import { TaskPriority } from '@take-home/shared';
 
 class MockStorageService {
   updateTaskItem(): void {
+    return;
+  }
+  
+  addTaskItem(): void {
     return;
   }
 }
@@ -37,6 +44,8 @@ describe('AddComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
       ],
       declarations: [AddComponent],
       providers: [{ provide: StorageService, useClass: MockStorageService }],
@@ -84,6 +93,9 @@ describe('AddComponent', () => {
     component['addTaskForm'].controls['title'].setValue(
       'This is a valid title',
     );
+    component['addTaskForm'].controls['date'].setValue(
+      new Date(),
+    );
     fixture.detectChanges();
     expect(await addButton.isDisabled()).toBeFalsy();
   });
@@ -91,11 +103,14 @@ describe('AddComponent', () => {
   it(`should create a new task for a valid submission and navigate home`, async () => {
     jest.spyOn(router, 'navigateByUrl').mockResolvedValue(true);
     jest.spyOn(component, 'onSubmit');
-    jest.spyOn(storageService, 'updateTaskItem').mockResolvedValue();
+    jest.spyOn(storageService, 'addTaskItem').mockResolvedValue();
+    let date = new Date();
     component['addTaskForm'].controls['title'].setValue('Adding a test task');
     component['addTaskForm'].controls['description'].setValue(
       'This task should be added to the list',
     );
+    component['addTaskForm'].controls['date'].setValue(date);
+    component['addTaskForm'].controls['priority'].setValue(TaskPriority.MEDIUM);
     fixture.detectChanges();
     const addButton = await loader.getHarness(
       MatButtonHarness.with({ selector: '[data-testid="add-task"]' }),
@@ -103,12 +118,14 @@ describe('AddComponent', () => {
     await addButton.click();
     fixture.detectChanges();
     expect(component.onSubmit).toBeCalledTimes(1);
-    expect(storageService.updateTaskItem).toBeCalledTimes(1);
-    expect(storageService.updateTaskItem).toBeCalledWith(
+    expect(storageService.addTaskItem).toBeCalledTimes(1);
+    expect(storageService.addTaskItem).toBeCalledWith(
       expect.objectContaining({
         isArchived: false,
         title: 'Adding a test task',
         description: 'This task should be added to the list',
+        scheduledDate: date,
+        priority: TaskPriority.MEDIUM
       }),
     );
     expect(router.navigateByUrl).toHaveBeenCalledWith('/');
